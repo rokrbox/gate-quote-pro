@@ -453,3 +453,6 @@ if __name__ == '__main__':
     print("="*50 + "\n")
 
     flask_app.run(host='0.0.0.0', port=8080, debug=False)
+
+# Alias for gunicorn
+app = flask_app
