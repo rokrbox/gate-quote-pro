@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gate Quote Pro - Professional Gate Installation Quotes</title>
+    <meta name="description" content="Professional quoting software for gate installation businesses. Create quotes, manage customers, track prices.">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚪</text></svg>">
+</head>
+<body>
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">
+            <h1>🚪 Gate Quote Pro</h1>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#" onclick="showPage('newQuote')" class="nav-item active">📝 New Quote</a>
+            <a href="#" onclick="showPage('quotes')" class="nav-item">📋 Quote History</a>
+            <a href="#" onclick="showPage('customers')" class="nav-item">👥 Customers</a>
+            <a href="#" onclick="showPage('priceList')" class="nav-item">💰 Price List</a>
+            <a href="#" onclick="showPage('howTo')" class="nav-item">❓ How To Use</a>
+            <a href="#" onclick="showPage('settings')" class="nav-item">⚙️ Settings</a>
+        </div>
+    </nav>
+
+    <!-- Desktop Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Gate Quote Pro</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" onclick="showPage('newQuote')" class="nav-item active" data-page="newQuote">
+                <span>📝</span> New Quote
+            </a>
+            <a href="#" onclick="showPage('quotes')" class="nav-item" data-page="quotes">
+                <span>📋</span> Quote History
+            </a>
+            <a href="#" onclick="showPage('customers')" class="nav-item" data-page="customers">
+                <span>👥</span> Customers
+            </a>
+            <a href="#" onclick="showPage('priceList')" class="nav-item" data-page="priceList">
+                <span>💰</span> Price List
+            </a>
+            <a href="#" onclick="showPage('howTo')" class="nav-item" data-page="howTo">
+                <span>❓</span> How To Use
+            </a>
+            <a href="#" onclick="showPage('settings')" class="nav-item" data-page="settings">
+                <span>⚙️</span> Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            Gate Quote Pro v1.0<br>
+            <small style="opacity: 0.6;">Made for gate pros</small>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- New Quote Page -->
+        <div id="newQuotePage" class="page active">
+            <div class="page-header">
+                <h2>📝 Create New Quote</h2>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="calculateQuote()">🔢 Calculate</button>
+                    <button class="btn btn-primary" onclick="saveQuote()">💾 Save Quote</button>
+                    <button class="btn btn-success" onclick="generatePDF()" id="pdfBtn" style="display:none;">📄 Generate PDF</button>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <!-- Customer Section -->
+                <div class="card">
+                    <h3>Customer Information</h3>
+                    <div class="form-row">
+                        <select id="customerSelect" onchange="onCustomerSelect()" style="flex:1;">
+                            <option value="">-- Select Existing Customer --</option>
+                        </select>
+                        <button class="btn btn-small btn-primary" onclick="showCustomerModal()">+ New Customer</button>
+                    </div>
+                    <div id="customerInfo" class="customer-info" style="display:none;"></div>
+                </div>
+
+                <!-- Gate Specifications -->
+                <div class="card">
+                    <h3>Gate Specifications</h3>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Gate Type</label>
+                            <select id="gateType">
+                                <option value="swing">🚪 Swing Gate</option>
+                                <option value="sliding">➡️ Sliding Gate</option>
+                                <option value="cantilever">🔄 Cantilever Gate</option>
+                                <option value="bi-fold">📂 Bi-Fold Gate</option>
+                                <option value="pedestrian">🚶 Pedestrian Gate</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Style / Complexity</label>
+                            <select id="gateStyle">
+                                <option value="basic">Basic (Simple design)</option>
+                                <option value="standard" selected>Standard (Normal design)</option>
+                                <option value="ornamental">Ornamental (Decorative)</option>
+                                <option value="custom">Custom (Complex design)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Width (feet)</label>
+                            <input type="number" id="width" value="12" step="0.5" min="3" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label>Height (feet)</label>
+                            <input type="number" id="height" value="6" step="0.5" min="3" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label>Material</label>
+                            <select id="material">
+                                <option value="steel" selected>🔩 Steel</option>
+                                <option value="aluminum">⚪ Aluminum</option>
+                                <option value="wrought_iron">🏛️ Wrought Iron</option>
+                                <option value="wood">🪵 Wood</option>
+                                <option value="chain_link">🔗 Chain Link</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Automation</label>
+                            <select id="automation">
+                                <option value="none">🚫 None (Manual)</option>
+                                <option value="single_swing">⚡ Single Swing Operator</option>
+                                <option value="dual_swing">⚡⚡ Dual Swing Operator</option>
+                                <option value="slide">⚡ Slide Operator</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Access Control</label>
+                            <select id="accessControl">
+                                <option value="none">🚫 None</option>
+                                <option value="keypad">🔢 Keypad Entry</option>
+                                <option value="remote">📡 Remote Control</option>
+                                <option value="intercom">📞 Intercom System</option>
+                                <option value="full_system">🏠 Full Access System (Keypad + Intercom + Remote)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Site Conditions -->
+                <div class="card">
+                    <h3>Site Conditions</h3>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Ground Type</label>
+                            <select id="groundType">
+                                <option value="concrete" selected>🧱 Concrete</option>
+                                <option value="asphalt">⬛ Asphalt</option>
+                                <option value="gravel">🪨 Gravel</option>
+                                <option value="dirt">🟤 Dirt/Soil</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Slope / Grade</label>
+                            <select id="slope">
+                                <option value="flat" selected>📏 Flat (0-2%)</option>
+                                <option value="slight">📐 Slight (2-5%)</option>
+                                <option value="moderate">📐📐 Moderate (5-10%)</option>
+                                <option value="steep">⛰️ Steep (10%+)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Distance to Power (feet)</label>
+                            <input type="number" id="powerDistance" value="0" step="1" min="0" placeholder="0 if power is at gate location">
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="removalNeeded">
+                                Old gate removal needed
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="card">
+                    <h3>Job Notes</h3>
+                    <textarea id="notes" rows="3" placeholder="Special instructions, site access notes, customer preferences..."></textarea>
+                </div>
+
+                <!-- Materials -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h3>Materials & Equipment</h3>
+                        <div>
+                            <button class="btn btn-small btn-secondary" onclick="suggestMaterials()">🪄 Auto-Suggest</button>
+                            <button class="btn btn-small btn-primary" onclick="showAddItemModal()">+ Add Item</button>
+                        </div>
+                    </div>
+                    <div id="itemsList" class="items-list">
+                        <p class="empty-message">No materials added yet.<br>Click <strong>"Auto-Suggest"</strong> to automatically add materials based on your gate specs, or manually add items.</p>
+                    </div>
+                </div>
+
+                <!-- Quote Summary -->
+                <div class="card full-width">
+                    <h3>Quote Summary</h3>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Estimated Labor Hours</label>
+                            <input type="number" id="laborHours" value="0" step="0.25" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Labor Rate ($/hour)</label>
+                            <input type="number" id="laborRate" value="125" step="5" min="0">
+                        </div>
+                    </div>
+                    <div class="summary-totals">
+                        <div class="summary-row">
+                            <span>Materials (with markup):</span>
+                            <span id="materialsCost">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Labor:</span>
+                            <span id="laborCost">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>TOTAL:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote History Page -->
+        <div id="quotesPage" class="page">
+            <div class="page-header">
+                <h2>📋 Quote History</h2>
+                <div class="header-actions">
+                    <select id="statusFilter" onchange="loadQuotes()">
+                        <option value="">All Statuses</option>
+                        <option value="draft">📝 Draft</option>
+                        <option value="sent">📤 Sent</option>
+                        <option value="accepted">✅ Accepted</option>
+                        <option value="declined">❌ Declined</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="showPage('newQuote')">+ Create New Quote</button>
+                </div>
+            </div>
+            <div id="quotesList" class="quotes-list">
+                <p class="empty-message">Loading quotes...</p>
+            </div>
+        </div>
+
+        <!-- Customers Page -->
+        <div id="customersPage" class="page">
+            <div class="page-header">
+                <h2>👥 Customers</h2>
+                <div class="header-actions">
+                    <input type="text" id="customerSearch" placeholder="🔍 Search customers..." oninput="searchCustomers()" style="min-width: 200px;">
+                    <button class="btn btn-primary" onclick="showCustomerModal()">+ Add Customer</button>
+                </div>
+            </div>
+            <div id="customersList" class="customers-list">
+                <p class="empty-message">Loading customers...</p>
+            </div>
+        </div>
+
+        <!-- Price List Page -->
+        <div id="priceListPage" class="page">
+            <div class="page-header">
+                <h2>💰 Price List</h2>
+                <div class="header-actions">
+                    <select id="categoryFilter" onchange="loadMaterials()">
+                        <option value="">All Categories</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="showMaterialModal()">+ Add Material</button>
+                </div>
+            </div>
+
+            <!-- Supplier Price Check -->
+            <div class="card price-check-card">
+                <h3>🔍 Check Supplier Prices</h3>
+                <p style="color: var(--gray-500); margin-bottom: 16px; font-size: 14px;">
+                    Paste a product URL from any major retailer to check the current price:
+                </p>
+                <div class="form-row">
+                    <input type="text" id="priceCheckUrl" placeholder="https://www.homedepot.com/p/..." style="flex: 1;">
+                    <button class="btn btn-primary" onclick="checkPrice()">Check Price</button>
+                </div>
+                <div class="supplier-links">
+                    <span>Quick search:</span>
+                    <button class="btn btn-small btn-secondary" onclick="openSupplier('homedepot')">🏠 Home Depot</button>
+                    <button class="btn btn-small btn-secondary" onclick="openSupplier('lowes')">🔵 Lowe's</button>
+                    <button class="btn btn-small btn-secondary" onclick="openSupplier('tractorsupply')">🚜 Tractor Supply</button>
+                    <button class="btn btn-small btn-secondary" onclick="openSupplier('walmart')">🟡 Walmart</button>
+                </div>
+                <div id="priceCheckResult"></div>
+            </div>
+
+            <div id="materialsList" class="materials-list">
+                <p class="empty-message">Loading price list...</p>
+            </div>
+        </div>
+
+        <!-- How To Page -->
+        <div id="howToPage" class="page">
+            <div class="page-header">
+                <h2>❓ How To Use Gate Quote Pro</h2>
+            </div>
+
+            <div class="how-to-content">
+                <div class="how-to-section">
+                    <h3><span class="step-number">1</span> First: Set Up Your Company</h3>
+                    <p>Before creating quotes, go to <strong>Settings</strong> and enter your company information:</p>
+                    <ul>
+                        <li>Company name, address, phone, and email</li>
+                        <li>Your contractor license number</li>
+                        <li>Your hourly labor rate (default is $125/hr)</li>
+                        <li>Materials markup percentage (default is 30%)</li>
+                        <li>Terms and conditions for your quotes</li>
+                    </ul>
+                    <div class="tip-box">
+                        <strong>💡 Pro Tip:</strong> Your company info appears on every PDF quote, so make sure it's accurate!
+                    </div>
+                </div>
+
+                <div class="how-to-section">
+                    <h3><span class="step-number">2</span> Review Your Price List</h3>
+                    <p>The <strong>Price List</strong> page contains all materials and their costs. The app comes with common gate installation materials pre-loaded.</p>
+                    <ul>
+                        <li>Review and update prices to match your actual costs</li>
+                        <li>Add new materials as needed</li>
+                        <li>Use the supplier price checker to look up current prices at Home Depot, Lowe's, Tractor Supply, or Walmart</li>
+                        <li>Set markup percentages for each item (default 30%)</li>
+                    </ul>
+                    <div class="tip-box">
+                        <strong>💡 Pro Tip:</strong> Keep your price list updated! Material costs change frequently.
+                    </div>
+                </div>
+
+                <div class="how-to-section">
+                    <h3><span class="step-number">3</span> Add Your Customers</h3>
+                    <p>Go to <strong>Customers</strong> to add your clients. You can also add customers directly when creating a quote.</p>
+                    <ul>
+                        <li>Enter name, phone, email, and address</li>
+                        <li>Add notes about the customer or property</li>
+                        <li>View all quotes for each customer</li>
+                    </ul>
+                </div>
+
+                <div class="how-to-section">
+                    <h3><span class="step-number">4</span> Create a Quote</h3>
+                    <p>This is the main feature! Go to <strong>New Quote</strong> to create a professional quote:</p>
+                    <ul>
+                        <li><strong>Select or create a customer</strong> - Their info will appear on the quote</li>
+                        <li><strong>Enter gate specifications</strong> - Type, size, material, automation</li>
+                        <li><strong>Set site conditions</strong> - Ground type, slope, power distance</li>
+                        <li><strong>Click "Calculate"</strong> - This auto-estimates labor hours</li>
+                        <li><strong>Click "Auto-Suggest"</strong> - This adds materials based on your specs</li>
+                        <li><strong>Review and adjust</strong> - Add/remove items, change quantities</li>
+                        <li><strong>Save the quote</strong> - Then generate a PDF to send to your customer</li>
+                    </ul>
+                    <div class="tip-box">
+                        <strong>💡 Pro Tip:</strong> The "Auto-Suggest" feature is smart! It knows that swing gates need hinges, sliding gates need track, automated gates need photoeyes, etc.
+                    </div>
+                </div>
+
+                <div class="how-to-section">
+                    <h3><span class="step-number">5</span> Manage Your Quotes</h3>
+                    <p>Go to <strong>Quote History</strong> to see all your quotes and track their status:</p>
+                    <ul>
+                        <li><strong>Draft</strong> - Quote is being worked on</li>
+                        <li><strong>Sent</strong> - Quote has been sent to customer</li>
+                        <li><strong>Accepted</strong> - Customer accepted the quote 🎉</li>
+                        <li><strong>Declined</strong> - Customer declined</li>
+                    </ul>
+                    <p>You can edit quotes, regenerate PDFs, or delete old quotes anytime.</p>
+                </div>
+
+                <div class="how-to-section">
+                    <h3><span class="step-number">6</span> Tips for Best Results</h3>
+                    <ul>
+                        <li>Always do a site visit before creating a final quote</li>
+                        <li>Take photos and measurements</li>
+                        <li>Account for any unusual site conditions in your notes</li>
+                        <li>Review the auto-suggested materials - add or remove as needed</li>
+                        <li>Adjust labor hours based on your experience with similar jobs</li>
+                        <li>Include clear terms and a validity period on your quotes</li>
+                    </ul>
+                </div>
+
+                <div class="how-to-section" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-color: #6ee7b7;">
+                    <h3 style="color: var(--success);">🎉 You're Ready!</h3>
+                    <p>That's everything you need to know. Gate Quote Pro will help you create professional quotes quickly and accurately.</p>
+                    <p><strong>Need help?</strong> Contact the developer or check back here for guidance.</p>
+                    <button class="btn btn-success" onclick="showPage('newQuote')" style="margin-top: 12px;">Create Your First Quote →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settingsPage" class="page">
+            <div class="page-header">
+                <h2>⚙️ Settings</h2>
+                <button class="btn btn-success" onclick="saveSettings()">💾 Save Settings</button>
+            </div>
+
+            <div class="settings-grid">
+                <div class="card">
+                    <h3>Company Information</h3>
+                    <p style="color: var(--gray-500); margin-bottom: 20px; font-size: 14px;">
+                        This information appears on your PDF quotes.
+                    </p>
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" id="companyName" placeholder="Your Gate Company">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="companyAddress" placeholder="123 Main St, City, State 12345">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="companyPhone" placeholder="(555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="companyEmail" placeholder="info@yourcompany.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Contractor License #</label>
+                        <input type="text" id="companyLicense" placeholder="License number">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Quote Settings</h3>
+                    <p style="color: var(--gray-500); margin-bottom: 20px; font-size: 14px;">
+                        Default values for new quotes.
+                    </p>
+                    <div class="form-group">
+                        <label>Default Labor Rate ($ per hour)</label>
+                        <input type="number" id="settingsLaborRate" step="5" placeholder="125">
+                    </div>
+                    <div class="form-group">
+                        <label>Materials Markup (%)</label>
+                        <input type="number" id="settingsMarkup" step="5" placeholder="30">
+                        <small style="color: var(--gray-400); display: block; margin-top: 4px;">
+                            Applied to material costs on quotes
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>Sales Tax Rate (%)</label>
+                        <input type="number" id="settingsTaxRate" step="0.25" placeholder="0">
+                        <small style="color: var(--gray-400); display: block; margin-top: 4px;">
+                            Set to 0 if you don't charge sales tax
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>Quote Number Prefix</label>
+                        <input type="text" id="settingsQuotePrefix" placeholder="GQ" maxlength="5">
+                        <small style="color: var(--gray-400); display: block; margin-top: 4px;">
+                            Quote numbers will be like: GQ-202601-0001
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>Terms & Conditions</label>
+                        <textarea id="settingsTerms" rows="4" placeholder="Quote valid for 30 days. 50% deposit required..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Customer Modal -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="customerModalTitle">New Customer</h3>
+                <button class="close-btn" onclick="closeModal('customerModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editCustomerId">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="customerName" placeholder="John Smith">
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="customerEmail" placeholder="john@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="customerPhone" placeholder="(555) 123-4567">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Street Address</label>
+                    <input type="text" id="customerAddress" placeholder="123 Oak Street">
+                </div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" id="customerCity" placeholder="Austin">
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="text" id="customerState" placeholder="TX" maxlength="2">
+                    </div>
+                    <div class="form-group">
+                        <label>ZIP Code</label>
+                        <input type="text" id="customerZip" placeholder="78701">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="customerNotes" rows="2" placeholder="Gate code, best time to call, etc."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('customerModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCustomer()">Save Customer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Material to Quote</h3>
+                <button class="close-btn" onclick="closeModal('itemModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="itemCategory" onchange="loadCategoryMaterials()">
+                        <option value="gates">🚪 Gates</option>
+                        <option value="operators">⚡ Operators</option>
+                        <option value="hardware">🔧 Hardware</option>
+                        <option value="access_control">🔐 Access Control</option>
+                        <option value="electrical">💡 Electrical</option>
+                        <option value="misc">📦 Misc</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select from Price List</label>
+                    <select id="itemMaterial" onchange="onMaterialSelect()"></select>
+                </div>
+                <div class="form-group">
+                    <label>Or Enter Custom Description</label>
+                    <input type="text" id="itemCustomDesc" placeholder="Custom material not in price list...">
+                </div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" id="itemQty" value="1" step="0.5" min="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Unit</label>
+                        <input type="text" id="itemUnit" value="each" placeholder="each, ft, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label>Unit Cost ($)</label>
+                        <input type="number" id="itemCost" value="0" step="0.01" min="0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('itemModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addItem()">Add to Quote</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Material Edit Modal -->
+    <div id="materialModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="materialModalTitle">Add to Price List</h3>
+                <button class="close-btn" onclick="closeModal('materialModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editMaterialId">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="materialCategory">
+                        <option value="gates">🚪 Gates</option>
+                        <option value="operators">⚡ Operators</option>
+                        <option value="hardware">🔧 Hardware</option>
+                        <option value="access_control">🔐 Access Control</option>
+                        <option value="electrical">💡 Electrical</option>
+                        <option value="misc">📦 Misc</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Material Name *</label>
+                    <input type="text" id="materialName" placeholder="LiftMaster LA500 Swing Operator">
+                </div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>Unit</label>
+                        <input type="text" id="materialUnit" value="each" placeholder="each, ft, pair">
+                    </div>
+                    <div class="form-group">
+                        <label>Your Cost ($)</label>
+                        <input type="number" id="materialCost" value="0" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Markup (%)</label>
+                        <input type="number" id="materialMarkup" value="30" step="5" min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Supplier Name</label>
+                    <input type="text" id="materialSupplier" placeholder="Home Depot, Lowe's, etc.">
+                </div>
+                <div class="form-group">
+                    <label>Supplier URL (optional)</label>
+                    <input type="text" id="materialSupplierUrl" placeholder="https://...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('materialModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveMaterial()">Save Material</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

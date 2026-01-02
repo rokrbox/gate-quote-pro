@@ -1,0 +1,63 @@
+{
+  "gates": [
+    {"name": "Steel Swing Gate Panel (per ft)", "unit": "ft", "cost": 85.00, "category": "gates"},
+    {"name": "Aluminum Swing Gate Panel (per ft)", "unit": "ft", "cost": 95.00, "category": "gates"},
+    {"name": "Wrought Iron Gate Panel (per ft)", "unit": "ft", "cost": 120.00, "category": "gates"},
+    {"name": "Wood Gate Panel (per ft)", "unit": "ft", "cost": 65.00, "category": "gates"},
+    {"name": "Chain Link Gate (per ft)", "unit": "ft", "cost": 35.00, "category": "gates"},
+    {"name": "Steel Sliding Gate Panel (per ft)", "unit": "ft", "cost": 95.00, "category": "gates"},
+    {"name": "Cantilever Gate Track System", "unit": "each", "cost": 450.00, "category": "gates"},
+    {"name": "V-Track Sliding System", "unit": "each", "cost": 280.00, "category": "gates"}
+  ],
+  "operators": [
+    {"name": "LiftMaster LA400 Swing Operator", "unit": "each", "cost": 650.00, "category": "operators"},
+    {"name": "LiftMaster LA500 Swing Operator", "unit": "each", "cost": 850.00, "category": "operators"},
+    {"name": "LiftMaster RSL12U Slide Operator", "unit": "each", "cost": 1200.00, "category": "operators"},
+    {"name": "Mighty Mule MM360 Swing Operator", "unit": "each", "cost": 450.00, "category": "operators"},
+    {"name": "Mighty Mule MM560 Dual Swing", "unit": "each", "cost": 750.00, "category": "operators"},
+    {"name": "US Automatic Patriot Swing", "unit": "each", "cost": 550.00, "category": "operators"},
+    {"name": "US Automatic Ranger Slide", "unit": "each", "cost": 950.00, "category": "operators"},
+    {"name": "FAAC 400 Swing Operator", "unit": "each", "cost": 1100.00, "category": "operators"}
+  ],
+  "hardware": [
+    {"name": "Heavy Duty Hinges (pair)", "unit": "pair", "cost": 85.00, "category": "hardware"},
+    {"name": "Standard Hinges (pair)", "unit": "pair", "cost": 45.00, "category": "hardware"},
+    {"name": "J-Bolt Hinges (pair)", "unit": "pair", "cost": 35.00, "category": "hardware"},
+    {"name": "Gate Latch - Standard", "unit": "each", "cost": 25.00, "category": "hardware"},
+    {"name": "Gate Latch - Heavy Duty", "unit": "each", "cost": 55.00, "category": "hardware"},
+    {"name": "Drop Rod/Cane Bolt", "unit": "each", "cost": 35.00, "category": "hardware"},
+    {"name": "Gate Wheels (pair)", "unit": "pair", "cost": 65.00, "category": "hardware"},
+    {"name": "Steel Post 4x4 (per ft)", "unit": "ft", "cost": 12.00, "category": "hardware"},
+    {"name": "Steel Post 6x6 (per ft)", "unit": "ft", "cost": 18.00, "category": "hardware"},
+    {"name": "Concrete (80lb bag)", "unit": "bag", "cost": 6.50, "category": "hardware"}
+  ],
+  "access_control": [
+    {"name": "Wireless Keypad", "unit": "each", "cost": 125.00, "category": "access_control"},
+    {"name": "Wired Keypad", "unit": "each", "cost": 95.00, "category": "access_control"},
+    {"name": "Remote Control (single)", "unit": "each", "cost": 35.00, "category": "access_control"},
+    {"name": "Remote Control (pack of 3)", "unit": "pack", "cost": 85.00, "category": "access_control"},
+    {"name": "Intercom System - Basic", "unit": "each", "cost": 350.00, "category": "access_control"},
+    {"name": "Intercom System - Video", "unit": "each", "cost": 650.00, "category": "access_control"},
+    {"name": "Card Reader System", "unit": "each", "cost": 450.00, "category": "access_control"},
+    {"name": "Telephone Entry System", "unit": "each", "cost": 850.00, "category": "access_control"},
+    {"name": "Loop Detector (vehicle sensor)", "unit": "each", "cost": 185.00, "category": "access_control"},
+    {"name": "Safety Photoeye (pair)", "unit": "pair", "cost": 95.00, "category": "access_control"}
+  ],
+  "electrical": [
+    {"name": "Electrical Wire (per ft)", "unit": "ft", "cost": 1.25, "category": "electrical"},
+    {"name": "Conduit (per ft)", "unit": "ft", "cost": 2.50, "category": "electrical"},
+    {"name": "Junction Box", "unit": "each", "cost": 15.00, "category": "electrical"},
+    {"name": "GFCI Outlet", "unit": "each", "cost": 25.00, "category": "electrical"},
+    {"name": "Transformer 16V", "unit": "each", "cost": 45.00, "category": "electrical"},
+    {"name": "Battery Backup System", "unit": "each", "cost": 195.00, "category": "electrical"},
+    {"name": "Solar Panel Kit", "unit": "each", "cost": 385.00, "category": "electrical"}
+  ],
+  "misc": [
+    {"name": "Existing Gate Removal", "unit": "each", "cost": 150.00, "category": "misc"},
+    {"name": "Post Hole Digging (per hole)", "unit": "each", "cost": 75.00, "category": "misc"},
+    {"name": "Concrete Pad", "unit": "each", "cost": 250.00, "category": "misc"},
+    {"name": "Permit Fee (estimate)", "unit": "each", "cost": 150.00, "category": "misc"},
+    {"name": "Paint/Powder Coating", "unit": "each", "cost": 200.00, "category": "misc"},
+    {"name": "Rust Treatment", "unit": "each", "cost": 75.00, "category": "misc"}
+  ]
+}
